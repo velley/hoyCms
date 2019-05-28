@@ -1,0 +1,108 @@
+<h1 mat-dialog-title>添加数据集合</h1>
+
+<div mat-dialog-content>  
+
+  <mat-form-field >
+    <input matInput [(ngModel)]="tableBasicInfo.name_zh" placeholder="请输入集合名(中文)">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput [(ngModel)]="tableBasicInfo.name" placeholder="请输入集合名(英文)">
+  </mat-form-field>
+
+  <mat-form-field >
+    <mat-select [(ngModel)]="tableBasicInfo.ttype" placeholder="选择集合类型">
+      <mat-option value="article">文章</mat-option>
+      <mat-option value="user">用户</mat-option>
+      <mat-option value="commodity">商品</mat-option>
+      <mat-option value="custom">自定义</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <h3>请在下集合中添加自定义字段</h3>  
+
+  <mat-table [dataSource]="tableDetailDatas"> 
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> 字段名 </mat-header-cell>
+      <mat-cell *matCellDef="let element;let index = index">
+        <p *ngIf="index !== editLetter; else inputLetter" (click)="startEdit(index, $event)">
+          {{element.name}} 
+        </p>
+        <ng-template #inputLetter>
+          <mat-form-field>
+            <input matInput [(ngModel)]="element.name" placeholder="请输入字段名">
+          </mat-form-field> 
+        </ng-template>               
+      </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef> 字段类型 </mat-header-cell>
+      <mat-cell *matCellDef="let element;let index = index">
+        <p *ngIf="index !== editLetter; else inputLetter" (click)="startEdit(index, $event)">
+          {{element.type}} 
+        </p>
+        <ng-template #inputLetter>
+          <mat-select placeholder="选择字段类型" [(ngModel)]="element.type">
+            <mat-option value="String">String</mat-option>
+            <mat-option value="Number">Number</mat-option>
+            <mat-option value="JSON">JSON</mat-option>
+            <mat-option value="Array">Array</mat-option>
+          </mat-select>
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="default">
+      <mat-header-cell *matHeaderCellDef> 默认值 </mat-header-cell>
+      <mat-cell *matCellDef="let element;let index = index">
+        <p *ngIf="index !== editLetter; else inputLetter" (click)="startEdit(index, $event)">
+          {{element.defaultValue}} 
+        </p>
+        <ng-template #inputLetter>
+          <mat-form-field>
+            <input matInput [(ngModel)]="element.defaultValue" placeholder="请输入字段名">
+          </mat-form-field> 
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="contact">
+      <mat-header-cell *matHeaderCellDef> 集合关联 </mat-header-cell>
+      <mat-cell *matCellDef="let element;let index = index">
+        <p *ngIf="index !== editLetter; else inputLetter" (click)="startEdit(index, $event)">
+          {{element.contact}} 
+        </p>
+        <ng-template #inputLetter>
+          <mat-form-field>
+            <input matInput [(ngModel)]="element.contact" placeholder="请输入字段名">
+          </mat-form-field> 
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="operate">
+      <mat-header-cell *matHeaderCellDef> 操作 </mat-header-cell>
+      <mat-cell *matCellDef="let row;let index = index">
+        <button mat-raised-button color="warn" (click)="delete(index)">删除</button>        
+      </mat-cell>    
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="tableDetailColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: tableDetailColumns;"></mat-row>  
+
+  </mat-table>    
+
+  <div class="operates">
+    <button mat-icon-button matTooltip="添加字段" (click)="addNewLetter()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">取消</button>
+  <button mat-button cdkFocusInitial (click)="submitCreateTable()">确认</button>
+</div>

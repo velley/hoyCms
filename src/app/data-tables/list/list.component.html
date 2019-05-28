@@ -1,0 +1,48 @@
+<mat-table [dataSource]="tableList" > 
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> 集合名称 </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.name_zh}} </mat-cell>
+  </ng-container>
+
+  <!-- Type Column -->
+  <ng-container matColumnDef="type">
+    <mat-header-cell *matHeaderCellDef> 集合类型 </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.type}} </mat-cell>
+  </ng-container>
+
+  <!-- Count Column -->
+  <ng-container matColumnDef="counts">
+    <mat-header-cell *matHeaderCellDef> 记录总数 </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.counts}} </mat-cell>
+  </ng-container>
+
+  <!-- Letter Column -->
+  <ng-container matColumnDef="letters">
+    <mat-header-cell *matHeaderCellDef> 相关字段 </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.letters}} </mat-cell>
+  </ng-container>
+
+  <!-- Api Column -->
+  <ng-container matColumnDef="api">
+    <mat-header-cell *matHeaderCellDef> api接口 </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.api}} </mat-cell>
+  </ng-container>
+
+  <!-- operate Column -->
+  <ng-container matColumnDef="operate">
+    <mat-header-cell *matHeaderCellDef> 操作 </mat-header-cell>
+    <mat-cell *matCellDef="let element"> 
+      <!-- <button mat-raised-button color="primary">添加字段</button> -->
+      <button mat-raised-button color="accent">详情</button>
+    </mat-cell>    
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="tableListColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: tableListColumns;"></mat-row>
+</mat-table>
+
+<!-- Create New DataTable -->
+<button mat-fab color="primary" matTooltip="创建数据集合" (click)="openDialog()">
+  <mat-icon>add</mat-icon>
+</button>
